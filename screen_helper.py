@@ -1,7 +1,5 @@
 screenHelper = """
 #: import SlideTransition kivy.uix.screenmanager.SlideTransition
-#: import OneLineListItem kivymd.uix.list.OneLineListItem
-#: import ContainerSupport kivymd.uix.list.ContainerSupport
 #: import partial functools.partial
 
 ScreenManager:

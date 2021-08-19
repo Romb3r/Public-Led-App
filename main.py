@@ -1,14 +1,11 @@
 import requests, os
 from kivymd.app import MDApp
-from kivy.core.window import Window
 from kivy.lang.builder import Builder
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.popup import Popup
 from kivy.uix.recycleview import RecycleView
 from screen_helper import screenHelper
-
-Window.size = (400, 600)
 
 
 class MenuScreen(Screen):
@@ -124,13 +121,7 @@ class RV(RecycleView):
         g = int(float(x[1]) * 255)
         b = int(float(x[2]) * 255)
 
-        sm.next()
-
-        try:
-            requests.post(f"http://{IP}/change?color_R={r}&color_G={g}&color_B={b}")
-        except:
-            print("Error")
-            show_popup(IP)
+        requests.post(f"http://{IP}/change?color_R={r}&color_G={g}&color_B={b}")
 
 
 class Faves_Schlafzimmer(Screen):
@@ -165,19 +156,13 @@ class LedApp(MDApp, ScreenManager):
         g = int(g * 255)
         b = int(b * 255)
 
-        try:
-            requests.post(f"http://{IP}/change?color_R={r}&color_G={g}&color_B={b}")
-        except:
-            print("Error")
-            show_popup(IP)
+        requests.post(f"http://{IP}/change?color_R={r}&color_G={g}&color_B={b}")
+
 
     def submit_brigthness(self, brightness_slider, IP):
         value = int(brightness_slider.value)
-        try:
-            requests.post(f"http://{IP}/brightness?value={value}")
-        except:
-            print("Error")
-            show_popup(IP)
+        requests.post(f"http://{IP}/brightness?value={value}")
+
 
     def set_faves(self, color_label):
         color = str(color_label.color)
