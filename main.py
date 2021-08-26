@@ -186,7 +186,7 @@ class LedApp(MDApp, ScreenManager):
         value = int(brightness_slider.value)
         try:
             pass
-            #requests.post(f"http://192.168.176.26/brightness?value={value}")
+            #requests.post(f"http://192.168.178.26/brightness?value={value}")
             #hier neue esps ergänzen
         except:
             show_popup()
