@@ -123,7 +123,7 @@ class RV_all(RecycleView):
         b = int(float(x[2]) * 255)
 
         try:
-            requests.post(f"http://192.168.278.26/change?color_R={r}&color_G={g}&color_B={b}")
+            requests.post(f"http://192.168.178.26/change?color_R={r}&color_G={g}&color_B={b}")
             # Hier neue ESP's ergänzen
         except:
             show_popup()
