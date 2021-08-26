@@ -10,137 +10,126 @@ from screen_helper import screenHelper
 
 Config.set('graphics', 'resizeable', True)
 
+
+class Funcs:
+    def change_color(self, colorpicker):
+        if colorpicker.color == [1, 0.8, 0.19999999999999996, 1] or colorpicker.color == [0, 0, 0, 0]:
+            pass
+        else:
+            self.ids["color_label"].color = colorpicker.color
+
+    def change_brightness_led(self, colorpicker, brightness_slider):
+        color = colorpicker.color
+        value = int(brightness_slider.value)
+        r = color[0]
+        g = color[1]
+        b = color[2]
+
+        r = int(r * 255)
+        g = int(g * 255)
+        b = int(b * 255)
+
+        percent = 100 * value / 255
+        percent = percent / 100
+        r = r * percent
+        g = g * percent
+        b = b * percent
+
+        r = int(r) / 255
+        g = int(g) / 255
+        b = int(b) / 255
+
+        self.ids["color_label"].color = [r, g, b, 1]
+
+
 class MenuScreen(Screen):
     pass
 
 
-class TVScreen(Screen):
-    def change_color(self, colorpicker):
-        if colorpicker.color == [1, 0.8, 0.19999999999999996, 1] or colorpicker.color == [0, 0, 0, 0]:
-            pass
-        else:
-            self.ids["color_label"].color = colorpicker.color
-
-    def change_brightness_led(self, colorpicker, brightness_slider):
-        color = colorpicker.color
-        value = int(brightness_slider.value)
-        r = color[0]
-        g = color[1]
-        b = color[2]
-
-        r = int(r * 255)
-        g = int(g * 255)
-        b = int(b * 255)
-
-        percent = 100 * value / 255
-        percent = percent / 100
-        r = r * percent
-        g = g * percent
-        b = b * percent
-
-        r = int(r) / 255
-        g = int(g) / 255
-        b = int(b) / 255
-
-        self.ids["color_label"].color = [r, g, b, 1]
+class ControllAll(Screen, Funcs):
+    pass
 
 
-class SchreibtischScreen(Screen):
-    def change_color(self, colorpicker):
-        if colorpicker.color == [1, 0.8, 0.19999999999999996, 1] or colorpicker.color == [0, 0, 0, 0]:
-            pass
-        else:
-            self.ids["color_label"].color = colorpicker.color
-
-    def change_brightness_led(self, colorpicker, brightness_slider):
-        color = colorpicker.color
-        value = int(brightness_slider.value)
-        r = color[0]
-        g = color[1]
-        b = color[2]
-
-        r = int(r * 255)
-        g = int(g * 255)
-        b = int(b * 255)
-
-        percent = 100 * value / 255
-        percent = percent / 100
-        r = r * percent
-        g = g * percent
-        b = b * percent
-
-        r = int(r) / 255
-        g = int(g) / 255
-        b = int(b) / 255
-
-        self.ids["color_label"].color = [r, g, b, 1]
+class TVScreen(Screen, Funcs):
+    pass
 
 
-class SofaScreen(Screen):
-    def change_color(self, colorpicker):
-        if colorpicker.color == [1, 0.8, 0.19999999999999996, 1] or colorpicker.color == [0, 0, 0, 0]:
-            pass
-        else:
-            self.ids["color_label"].color = colorpicker.color
+class SchreibtischScreen(Screen, Funcs):
+    pass
 
-    def change_brightness_led(self, colorpicker, brightness_slider):
-        color = colorpicker.color
-        value = int(brightness_slider.value)
-        r = color[0]
-        g = color[1]
-        b = color[2]
 
-        r = int(r * 255)
-        g = int(g * 255)
-        b = int(b * 255)
+class SofaScreen(Screen, Funcs):
+    pass
 
-        percent = 100 * value / 255
-        percent = percent / 100
-        r = r * percent
-        g = g * percent
-        b = b * percent
 
-        r = int(r) / 255
-        g = int(g) / 255
-        b = int(b) / 255
+class Faves_Schreibtisch(Screen):
+    pass
 
-        self.ids["color_label"].color = [r, g, b, 1]
+
+class Faves_TV(Screen):
+    pass
+
+
+class Faves_Sofa(Screen):
+    pass
+
+
+class Faves_All(Screen):
+    pass
+
+
+class P(Screen, FloatLayout):
+    pass
 
 
 class RV(RecycleView):
-
-    def get_faves(self):
+    @staticmethod
+    def get_faves():
         f = open("color_faves.txt", "r")
         faves = f.read()
         faves_list = faves.split("\n")
         f.close()
         return faves_list
 
-    def send_fave_request(self, x, IP):
+    @staticmethod
+    def send_fave_request(x, IP):
         x = x.split(", ")
 
         r = int(float(x[0]) * 255)
         g = int(float(x[1]) * 255)
         b = int(float(x[2]) * 255)
 
-        requests.post(f"http://{IP}/change?color_R={r}&color_G={g}&color_B={b}")
+        try:
+            requests.post(f"http://{IP}/change?color_R={r}&color_G={g}&color_B={b}")
+        except:
+            show_popup()
 
 
-class Faves_Schreibtisch(Screen):
-    pass
+class RV_all(RecycleView):
+    @staticmethod
+    def get_faves():
+        f = open("color_faves.txt", "r")
+        faves = f.read()
+        faves_list = faves.split("\n")
+        f.close()
+        return faves_list
 
-class Faves_TV(Screen):
-    pass
+    @staticmethod
+    def send_fave_request_all(x):
+        x = x.split(", ")
 
-class Faves_Sofa(Screen):
-    pass
+        r = int(float(x[0]) * 255)
+        g = int(float(x[1]) * 255)
+        b = int(float(x[2]) * 255)
 
-class P(Screen, FloatLayout):
-    pass
+        try:
+            requests.post(f"http://192.168.278.26/change?color_R={r}&color_G={g}&color_B={b}")
+            # Hier neue ESP's ergänzen
+        except:
+            show_popup()
 
 
 class LedApp(MDApp, ScreenManager):
-
     def build(self):
         self.theme_cls.primary_palette = "Yellow"
         self.theme_cls.primary_hue = "A700"
@@ -148,7 +137,8 @@ class LedApp(MDApp, ScreenManager):
         screen = Builder.load_string(screenHelper)
         return screen
 
-    def submit_color(self, colorpicker, IP):
+    @staticmethod
+    def submit_color(colorpicker, IP):
         color = colorpicker.color
         r = color[0]
         g = color[1]
@@ -158,15 +148,52 @@ class LedApp(MDApp, ScreenManager):
         g = int(g * 255)
         b = int(b * 255)
 
-        requests.post(f"http://{IP}/change?color_R={r}&color_G={g}&color_B={b}")
+        try:
+            requests.post(f"http://{IP}/change?color_R={r}&color_G={g}&color_B={b}")
+        except:
+            show_popup()
 
 
-    def submit_brigthness(self, brightness_slider, IP):
+    @staticmethod
+    def submit_color_all(colorpicker):
+        color = colorpicker.color
+        r = color[0]
+        g = color[1]
+        b = color[2]
+
+        r = int(r * 255)
+        g = int(g * 255)
+        b = int(b * 255)
+
+        try:
+            requests.post(f"http://192.168.178.26/change?color_R={r}&color_G={g}&color_B={b}")
+            # hier neue esp's ergänzen
+        except:
+            show_popup()
+
+
+    @staticmethod
+    def submit_brigthness(brightness_slider, IP):
         value = int(brightness_slider.value)
-        #requests.post(f"http://{IP}/brightness?value={value}")
+        try:
+            pass
+            #requests.post(f"http://{IP}/brightness?value={value}")
+        except:
+            show_popup()
+
+    @staticmethod
+    def submit_brigthness_all(brightness_slider):
+        value = int(brightness_slider.value)
+        try:
+            pass
+            #requests.post(f"http://192.168.176.26/brightness?value={value}")
+            #hier neue esps ergänzen
+        except:
+            show_popup()
 
 
-    def set_faves(self, color_label):
+    @staticmethod
+    def set_faves(color_label):
         color = str(color_label.color)
         color = color.split("[")
         color = color[1].split("]")
@@ -184,6 +211,15 @@ class LedApp(MDApp, ScreenManager):
                 f.write(color)
                 f.close()
 
+    @staticmethod
+    def all_off():
+        try:
+            print("Alle aus")
+            #requests.post("http://192.168.178.26/brightness?value=0")
+            #hier neue esps einfügen
+        except:
+            show_popup()
+
 
 def hex_to_rgb(hex):
     rgb = []
@@ -194,13 +230,9 @@ def hex_to_rgb(hex):
     return tuple(rgb)
 
 
-def show_popup(IP):
+def show_popup():
     show = P()
-    if IP == "192.168.178.26":
-        popup_window = Popup(title="Error Fernseher", content=show, size_hint=(None, None), size=(300, 100))
-    else:
-        popup_window = Popup(title="Error wo anders", content=show, size_hint=(None, None), size=(300, 100))
-
+    popup_window = Popup(title="Error", content=show, size_hint=(None, None), size=(500, 300))
     popup_window.open()
 
 
@@ -209,9 +241,11 @@ sm.add_widget(MenuScreen(name='menu'))
 sm.add_widget(TVScreen(name='tv'))
 sm.add_widget(SchreibtischScreen(name='schreibtisch'))
 sm.add_widget(SofaScreen(name='sofa'))
+sm.add_widget(ControllAll(name='controllAll'))
 sm.add_widget(Faves_TV(name='faves_tv'))
 sm.add_widget(Faves_Schreibtisch(name='faves_schreibtisch'))
 sm.add_widget(Faves_Sofa(name='faves_sofa'))
+sm.add_widget(Faves_All(name='faves_all'))
 
 
 LedApp().run()
