@@ -110,7 +110,7 @@ ScreenManager:
             text: '      Farbe ändern      '
             font_style: 'Button'
             font_size: '34sp'
-            pos_hint: {'center_x':0.5, 'center_y':0.28}
+            pos_hint: {'center_x':0.5, 'center_y':0.30}
             on_release: app.submit_color_all(colorpicker)
             
         MDIconButton:
@@ -129,7 +129,7 @@ ScreenManager:
             
         Slider:
             id: slider_all
-            pos_hint: {'center_x':0.5, 'center_y':0.18}
+            pos_hint: {'center_x':0.5, 'center_y':0.20}
             size_hint: 0.7, 0.1
             min: 0
             max: 255
@@ -210,7 +210,7 @@ ScreenManager:
             on_touch_up: root.change_color(colorpicker)
             
         MDRectangleFlatButton:
-            pos_hint: {'center_x':0.5, 'center_y':0.28}
+            pos_hint: {'center_x':0.5, 'center_y':0.30}
             text: '      Farbe ändern      '
             font_style: 'Button'
             font_size: '34sp'
@@ -232,7 +232,7 @@ ScreenManager:
             
         Slider:
             id: slider_tv
-            pos_hint: {'center_x':0.5, 'center_y':0.18}
+            pos_hint: {'center_x':0.5, 'center_y':0.20}
             size_hint: 0.7, 0.1
             min: 0
             max: 255
@@ -309,7 +309,7 @@ ScreenManager:
             text: '      Farbe ändern      '
             font_style: 'Button'
             font_size: '34sp'
-            pos_hint: {'center_x':0.5, 'center_y':0.28}
+            pos_hint: {'center_x':0.5, 'center_y':0.30}
             on_release: app.submit_color(colorpicker, '192.168.178.26')
             
         MDIconButton:
@@ -328,7 +328,7 @@ ScreenManager:
             
         Slider:
             id: slider_schreibtisch
-            pos_hint: {'center_x':0.5, 'center_y':0.18}
+            pos_hint: {'center_x':0.5, 'center_y':0.20}
             size_hint: 0.7, 0.1
             min: 0
             max: 255
@@ -421,7 +421,7 @@ ScreenManager:
             text: '      Farbe ändern      '
             font_style: 'Button'
             font_size: '34sp'
-            pos_hint: {'center_x':0.5, 'center_y':0.28}
+            pos_hint: {'center_x':0.5, 'center_y':0.30}
             on_release: app.submit_color(colorpicker, '192.168.178.26')
             
         MDIconButton:
@@ -440,7 +440,7 @@ ScreenManager:
             
         Slider:
             id: slider_sofa
-            pos_hint: {'center_x':0.5, 'center_y':0.18}
+            pos_hint: {'center_x':0.5, 'center_y':0.20}
             size_hint: 0.7, 0.1
             min: 0
             max: 255
