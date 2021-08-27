@@ -83,6 +83,7 @@ class P(Screen, FloatLayout):
 
 
 class RV(RecycleView):
+
     @staticmethod
     def get_faves():
         f = open("color_faves.txt", "r")
@@ -131,8 +132,8 @@ class RV_all(RecycleView):
 
 class LedApp(MDApp, ScreenManager):
     def build(self):
-        self.theme_cls.primary_palette = "Yellow"
-        self.theme_cls.primary_hue = "A700"
+        self.theme_cls.primary_palette = "Green"
+        self.theme_cls.primary_hue = "A200"
         self.theme_cls.theme_style = "Dark"
         screen = Builder.load_string(screenHelper)
         return screen
@@ -176,8 +177,7 @@ class LedApp(MDApp, ScreenManager):
     def submit_brigthness(brightness_slider, IP):
         value = int(brightness_slider.value)
         try:
-            pass
-            #requests.post(f"http://{IP}/brightness?value={value}")
+            requests.post(f"http://{IP}/brightness?value={value}")
         except:
             show_popup()
 
@@ -185,8 +185,7 @@ class LedApp(MDApp, ScreenManager):
     def submit_brigthness_all(brightness_slider):
         value = int(brightness_slider.value)
         try:
-            pass
-            #requests.post(f"http://192.168.178.26/brightness?value={value}")
+            requests.post(f"http://192.168.178.26/brightness?value={value}")
             #hier neue esps ergänzen
         except:
             show_popup()
@@ -215,7 +214,7 @@ class LedApp(MDApp, ScreenManager):
     def all_off():
         try:
             print("Alle aus")
-            #requests.post("http://192.168.178.26/brightness?value=0")
+            requests.post("http://192.168.178.26/change?color_R=0&color_G=0&color_B=0")
             #hier neue esps einfügen
         except:
             show_popup()

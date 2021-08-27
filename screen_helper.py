@@ -16,10 +16,22 @@ ScreenManager:
     
 <MenuScreen>:
     name: 'menu'
+    canvas.before:
+        Color:
+            rgb: 0/255, 117/255, 94/255
+        Triangle:
+            points: [0, self.size[1], self.size[0], self.size[1], 0, self.size[1]-(.4*self.size[1])]
+            
+        Color:
+            rgb: 28/255, 155/255, 130/255
+        Triangle:
+            points: [0, self.size[1], self.size[0], self.size[1], self.size[0], self.size[1]-(.4*self.size[1])]
+            
+    
     MDLabel:
         text: 'LED Controller'
         halign: 'center'
-        pos_hint: {'center_y':0.85}
+        pos_hint: {'center_y':0.45}
         font_style: 'Button'
         font_size: '40sp'
         
@@ -28,7 +40,7 @@ ScreenManager:
         font_size: '170sp'
         halign: 'center'
         pos_hint: {'center_y':0.65}
-
+        
     BoxLayout:
         orientation: 'vertical'
         spacing: 10
@@ -78,26 +90,19 @@ ScreenManager:
         MDIconButton:
             icon: 'arrow-right-bold-box'
             user_font_size: '45sp'
-            text_color: (255/255, 198/255, 0/255, 1)
+            text_color: app.theme_cls.primary_color
             theme_text_color: 'Custom'
             pos_hint: {'center_x':0.9, 'center_y':0.94}
             on_release: 
                 root.manager.transition.direction = 'left'
                 root.manager.current = 'faves_all'
     
-        MDIcon:
-            halign: 'center'
-            pos_hint: {'center_y': 0.90}
-            icon: 'home-assistant'
-            font_size: '45sp'
-            color: (255/255, 214/255, 0, 1)
-    
         MDLabel:
             text: "Alle LED's"
             font_style: 'Button'
             font_size: '36sp'
             halign: 'center'
-            pos_hint: {'center_y':0.96}
+            pos_hint: {'center_y':0.94}
     
         ColorWheel:
             text: 'Sofa'
@@ -107,7 +112,7 @@ ScreenManager:
             on_touch_up: root.change_color(colorpicker)
             
         MDRectangleFlatButton:
-            text: '      Farbe ändern      '
+            text: '    Farbe ändern    '
             font_style: 'Button'
             font_size: '34sp'
             pos_hint: {'center_x':0.5, 'center_y':0.30}
@@ -116,18 +121,18 @@ ScreenManager:
         MDIconButton:
             icon: 'heart'
             user_font_size: '30sp'
-            pos_hint: {'center_x':0.265, 'center_y':0.9}
+            pos_hint: {'center_x':0.1, 'center_y':0.85}
             text_color: (255/255, 15/255, 99/255, 1)
             theme_text_color: 'Custom'
             on_release: app.set_faves(color_label)
     
         MDIcon:
             icon: 'led-on'
-            pos_hint: {'center_x':0.665, 'center_y':0.85}
+            pos_hint: {'center_x':0.6, 'center_y':0.8}
             font_size: '45sp'
             id: color_label  
             
-        Slider:
+        MDSlider:
             id: slider_all
             pos_hint: {'center_x':0.5, 'center_y':0.20}
             size_hint: 0.7, 0.1
@@ -136,7 +141,7 @@ ScreenManager:
             step: 5
             value: 255
             orientation: 'horizontal'
-            cursor_image: 'Slider.png'
+            on_value_normalized:
             on_touch_up: 
                 app.submit_brigthness_all(slider_all)
                 root.change_brightness_led(colorpicker, slider_all)
@@ -150,9 +155,9 @@ ScreenManager:
             
         MDIconButton:
             icon: 'home'
-            user_font_size: '50sp'
+            user_font_size: '45sp'
             size_hint: None, None
-            pos_hint: {'center_x': 0.5, 'center_y': 0.07}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.05}
             on_release: 
                 root.manager.transition.direction = 'down'
                 root.manager.current = 'menu'
@@ -160,7 +165,7 @@ ScreenManager:
         MDIconButton:
             icon: 'arrow-right-bold-box'
             user_font_size: '45sp'
-            text_color: (255/255, 198/255, 0/255, 1)
+            text_color: app.theme_cls.primary_color
             theme_text_color: 'Custom'
             pos_hint: {'center_x':0.9, 'center_y':0.07}
             on_release: 
@@ -181,7 +186,7 @@ ScreenManager:
         MDIconButton:
             icon: 'arrow-right-bold-box'
             user_font_size: '45sp'
-            text_color: (255/255, 198/255, 0/255, 1)
+            text_color: app.theme_cls.primary_color
             theme_text_color: 'Custom'
             pos_hint: {'center_x':0.9, 'center_y':0.94}
             on_release: 
@@ -190,17 +195,10 @@ ScreenManager:
     
         MDLabel:
             halign: 'center'
-            pos_hint: {'center_y':0.96}
+            pos_hint: {'center_y':0.94}
             text: 'Fernseher'
             font_style: 'Button'
             font_size: '36sp'
-    
-        MDIcon:
-            halign: 'center'
-            pos_hint: {'center_y': 0.90}
-            icon: 'television-ambient-light'
-            font_size: '45sp'
-            color: (255/255, 214/255, 0, 1)
     
         ColorWheel:
             text: 'Fernseher'
@@ -211,7 +209,7 @@ ScreenManager:
             
         MDRectangleFlatButton:
             pos_hint: {'center_x':0.5, 'center_y':0.30}
-            text: '      Farbe ändern      '
+            text: '    Farbe ändern    '
             font_style: 'Button'
             font_size: '34sp'
             on_release: app.submit_color(colorpicker, '192.168.178.26')
@@ -219,18 +217,18 @@ ScreenManager:
         MDIconButton:
             icon: 'heart'
             user_font_size: '30sp'
-            pos_hint: {'center_x':0.265, 'center_y':0.9}
+            pos_hint: {'center_x':0.1, 'center_y':0.85}
             text_color: (255/255, 15/255, 99/255, 1)
             theme_text_color: 'Custom'
             on_release: app.set_faves(color_label)
     
         MDIcon:
             icon: 'led-on'
-            pos_hint: {'center_x':0.665, 'center_y':0.85}
+            pos_hint: {'center_x':0.6, 'center_y':0.8}
             font_size: '45sp'
             id: color_label  
             
-        Slider:
+        MDSlider:
             id: slider_tv
             pos_hint: {'center_x':0.5, 'center_y':0.20}
             size_hint: 0.7, 0.1
@@ -239,7 +237,7 @@ ScreenManager:
             step: 5
             value: 255
             orientation: 'horizontal'
-            cursor_image: 'Slider.png'
+            on_value_normalized:
             on_touch_up: 
                 app.submit_brigthness(slider_tv, '192.168.178.26')
                 root.change_brightness_led(colorpicker, slider_tv)
@@ -247,8 +245,8 @@ ScreenManager:
         MDIconButton:
             icon: 'home'
             size_hint: None, None
-            user_font_size: '50sp'
-            pos_hint: {'center_x': 0.5, 'center_y': 0.07}
+            user_font_size: '45sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.05}
             on_release: 
                 root.manager.transition.direction = 'down'
                 root.manager.current = 'menu'
@@ -256,7 +254,7 @@ ScreenManager:
         MDIconButton:
             icon: 'arrow-left-bold-box'
             user_font_size: '45sp'
-            text_color: (255/255, 198/255, 0/255, 1)
+            text_color: app.theme_cls.primary_color
             theme_text_color: 'Custom'
             pos_hint: {'center_x':0.1, 'center_y':0.07}
             on_release: 
@@ -277,26 +275,19 @@ ScreenManager:
         MDIconButton:
             icon: 'arrow-right-bold-box'
             user_font_size: '45sp'
-            text_color: (255/255, 198/255, 0/255, 1)
+            text_color: app.theme_cls.primary_color
             theme_text_color: 'Custom'
             pos_hint: {'center_x':0.9, 'center_y':0.94}
             on_release: 
                 root.manager.transition.direction = 'left'
                 root.manager.current = 'faves_schreibtisch'
     
-        MDIcon:
-            halign: 'center'
-            pos_hint: {'center_y': 0.90}
-            icon: 'desktop-tower-monitor'
-            font_size: '45sp'
-            color: (255/255, 214/255, 0, 1)
-    
         MDLabel:
             text: 'Schreibtisch'
             font_style: 'Button'
             font_size: '36sp'
             halign: 'center'
-            pos_hint: {'center_y':0.96}
+            pos_hint: {'center_y':0.94}
     
         ColorWheel:
             text: 'Schreibtisch'
@@ -306,7 +297,7 @@ ScreenManager:
             on_touch_up: root.change_color(colorpicker)
             
         MDRectangleFlatButton:
-            text: '      Farbe ändern      '
+            text: '    Farbe ändern    '
             font_style: 'Button'
             font_size: '34sp'
             pos_hint: {'center_x':0.5, 'center_y':0.30}
@@ -315,18 +306,18 @@ ScreenManager:
         MDIconButton:
             icon: 'heart'
             user_font_size: '30sp'
-            pos_hint: {'center_x':0.265, 'center_y':0.9}
+            pos_hint: {'center_x':0.1, 'center_y':0.85}
             text_color: (255/255, 15/255, 99/255, 1)
             theme_text_color: 'Custom'
             on_release: app.set_faves(color_label)
     
         MDIcon:
             icon: 'led-on'
-            pos_hint: {'center_x':0.665, 'center_y':0.85}
+            pos_hint: {'center_x':0.6, 'center_y':0.8}
             font_size: '45sp'
-            id: color_label  
+            id: color_label 
             
-        Slider:
+        MDSlider:
             id: slider_schreibtisch
             pos_hint: {'center_x':0.5, 'center_y':0.20}
             size_hint: 0.7, 0.1
@@ -335,7 +326,7 @@ ScreenManager:
             step: 5
             value: 255
             orientation: 'horizontal'
-            cursor_image: 'Slider.png'
+            on_value_normalized:
             on_touch_up: 
                 app.submit_brigthness(slider_schreibtisch, '192.168.178.26')
                 root.change_brightness_led(colorpicker, slider_schreibtisch)
@@ -343,8 +334,8 @@ ScreenManager:
         MDIconButton:
             icon: 'home'
             size_hint: None, None
-            user_font_size: '50sp'
-            pos_hint: {'center_x': 0.5, 'center_y': 0.07}
+            user_font_size: '45sp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.05}
             on_release: 
                 root.manager.transition.direction = 'down'
                 root.manager.current = 'menu'
@@ -352,7 +343,7 @@ ScreenManager:
         MDIconButton:
             icon: 'arrow-right-bold-box'
             user_font_size: '45sp'
-            text_color: (255/255, 198/255, 0/255, 1)
+            text_color: app.theme_cls.primary_color
             theme_text_color: 'Custom'
             pos_hint: {'center_x':0.9, 'center_y':0.07}
             on_release: 
@@ -368,7 +359,7 @@ ScreenManager:
         MDIconButton:
             icon: 'arrow-left-bold-box'
             user_font_size: '45sp'
-            text_color: (255/255, 198/255, 0/255, 1)
+            text_color: app.theme_cls.primary_color
             theme_text_color: 'Custom'
             pos_hint: {'center_x':0.1, 'center_y':0.07}
             on_release: 
@@ -385,30 +376,23 @@ ScreenManager:
 <SofaScreen>:
     name: 'sofa'
     RelativeLayout:
-        size: root.width, root.height   
+        size: root.width, root.height       
         MDIconButton:
             icon: 'arrow-right-bold-box'
             user_font_size: '45sp'
-            text_color: (255/255, 198/255, 0/255, 1)
+            text_color: app.theme_cls.primary_color
             theme_text_color: 'Custom'
             pos_hint: {'center_x':0.9, 'center_y':0.94}
             on_release: 
                 root.manager.transition.direction = 'left'
                 root.manager.current = 'faves_sofa'
     
-        MDIcon:
-            halign: 'center'
-            pos_hint: {'center_y': 0.90}
-            icon: 'sofa-single'
-            font_size: '45sp'
-            color: (255/255, 214/255, 0, 1)
-    
         MDLabel:
             text: 'Sofa'
             font_style: 'Button'
             font_size: '36sp'
             halign: 'center'
-            pos_hint: {'center_y':0.96}
+            pos_hint: {'center_y':0.94}
     
         ColorWheel:
             text: 'Sofa'
@@ -418,7 +402,7 @@ ScreenManager:
             on_touch_up: root.change_color(colorpicker)
             
         MDRectangleFlatButton:
-            text: '      Farbe ändern      '
+            text: '    Farbe ändern    '
             font_style: 'Button'
             font_size: '34sp'
             pos_hint: {'center_x':0.5, 'center_y':0.30}
@@ -427,18 +411,18 @@ ScreenManager:
         MDIconButton:
             icon: 'heart'
             user_font_size: '30sp'
-            pos_hint: {'center_x':0.265, 'center_y':0.9}
+            pos_hint: {'center_x':0.1, 'center_y':0.85}
             text_color: (255/255, 15/255, 99/255, 1)
             theme_text_color: 'Custom'
             on_release: app.set_faves(color_label)
     
         MDIcon:
             icon: 'led-on'
-            pos_hint: {'center_x':0.665, 'center_y':0.85}
+            pos_hint: {'center_x':0.6, 'center_y':0.8}
             font_size: '45sp'
-            id: color_label  
+            id: color_label 
             
-        Slider:
+        MDSlider:
             id: slider_sofa
             pos_hint: {'center_x':0.5, 'center_y':0.20}
             size_hint: 0.7, 0.1
@@ -447,16 +431,16 @@ ScreenManager:
             step: 5
             value: 255
             orientation: 'horizontal'
-            cursor_image: 'Slider.png'
+            on_value_normalized:
             on_touch_up: 
                 app.submit_brigthness(slider_sofa, '192.168.178.26')
                 root.change_brightness_led(colorpicker, slider_sofa)
             
         MDIconButton:
             icon: 'home'
+            user_font_size: '45sp'
             size_hint: None, None
-            user_font_size: '50sp'
-            pos_hint: {'center_x': 0.5, 'center_y': 0.07}
+            pos_hint: {'center_x': 0.5, 'center_y': 0.05}
             on_release: 
                 root.manager.transition.direction = 'down'
                 root.manager.current = 'menu'
@@ -464,7 +448,7 @@ ScreenManager:
         MDIconButton:
             icon: 'arrow-left-bold-box'
             user_font_size: '45sp'
-            text_color: (255/255, 198/255, 0/255, 1)
+            text_color: app.theme_cls.primary_color
             theme_text_color: 'Custom'
             pos_hint: {'center_x':0.1, 'center_y':0.07}
             on_release: 
@@ -480,7 +464,7 @@ ScreenManager:
         MDIconButton:
             icon: 'arrow-right-bold-box'
             user_font_size: '45sp'
-            text_color: (255/255, 198/255, 0/255, 1)
+            text_color: app.theme_cls.primary_color
             theme_text_color: 'Custom'
             pos_hint: {'center_x':0.9, 'center_y':0.07}
             on_release: 
@@ -502,7 +486,7 @@ ScreenManager:
         MDIconButton:
             icon: 'arrow-left-bold-box'
             user_font_size: '45sp'
-            text_color: (255/255, 198/255, 0/255, 1)
+            text_color: app.theme_cls.primary_color
             theme_text_color: 'Custom'
             pos_hint: {'center_x':0.1, 'center_y':0.5}
             on_release: 
@@ -521,7 +505,7 @@ ScreenManager:
         MDIconButton:
             icon: 'arrow-left-bold-box'
             user_font_size: '45sp'
-            text_color: (255/255, 198/255, 0/255, 1)
+            text_color: app.theme_cls.primary_color
             theme_text_color: 'Custom'
             pos_hint: {'center_x':0.1, 'center_y':0.5}
             on_release: 
@@ -540,7 +524,7 @@ ScreenManager:
         MDIconButton:
             icon: 'arrow-left-bold-box'
             user_font_size: '45sp'
-            text_color: (255/255, 198/255, 0/255, 1)
+            text_color: app.theme_cls.primary_color
             theme_text_color: 'Custom'
             pos_hint: {'center_x':0.1, 'center_y':0.5}
             on_release: 
@@ -558,7 +542,7 @@ ScreenManager:
         MDIconButton:
             icon: 'arrow-left-bold-box'
             user_font_size: '45sp'
-            text_color: (255/255, 198/255, 0/255, 1)
+            text_color: app.theme_cls.primary_color
             theme_text_color: 'Custom'
             pos_hint: {'center_x':0.1, 'center_y':0.5}
             on_release: 
