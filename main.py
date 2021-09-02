@@ -6,6 +6,7 @@ from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.popup import Popup
 from kivy.uix.recycleview import RecycleView
+from kivy.properties import ObjectProperty
 from screen_helper import screenHelper
 
 Config.set('graphics', 'resizeable', True)
@@ -62,22 +63,6 @@ class SofaScreen(Screen, Funcs):
     pass
 
 
-class Faves_Schreibtisch(Screen):
-    pass
-
-
-class Faves_TV(Screen):
-    pass
-
-
-class Faves_Sofa(Screen):
-    pass
-
-
-class Faves_All(Screen):
-    pass
-
-
 class P(Screen, FloatLayout):
     pass
 
@@ -130,6 +115,10 @@ class RV_all(RecycleView):
             show_popup()
 
 
+class ContentNavigationDrawer(RV):
+    nav_drawer = ObjectProperty()
+
+
 class LedApp(MDApp, ScreenManager):
     def build(self):
         self.theme_cls.primary_palette = "Green"
@@ -177,7 +166,8 @@ class LedApp(MDApp, ScreenManager):
     def submit_brigthness(brightness_slider, IP):
         value = int(brightness_slider.value)
         try:
-            requests.post(f"http://{IP}/brightness?value={value}")
+            pass
+            #requests.post(f"http://{IP}/brightness?value={value}")
         except:
             show_popup()
 
@@ -185,7 +175,8 @@ class LedApp(MDApp, ScreenManager):
     def submit_brigthness_all(brightness_slider):
         value = int(brightness_slider.value)
         try:
-            requests.post(f"http://192.168.178.26/brightness?value={value}")
+            pass
+            #requests.post(f"http://192.168.178.26/brightness?value={value}")
             #hier neue esps ergänzen
         except:
             show_popup()
@@ -241,10 +232,7 @@ sm.add_widget(TVScreen(name='tv'))
 sm.add_widget(SchreibtischScreen(name='schreibtisch'))
 sm.add_widget(SofaScreen(name='sofa'))
 sm.add_widget(ControllAll(name='controllAll'))
-sm.add_widget(Faves_TV(name='faves_tv'))
-sm.add_widget(Faves_Schreibtisch(name='faves_schreibtisch'))
-sm.add_widget(Faves_Sofa(name='faves_sofa'))
-sm.add_widget(Faves_All(name='faves_all'))
+
 
 
 LedApp().run()

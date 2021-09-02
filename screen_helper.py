@@ -8,10 +8,6 @@ ScreenManager:
     SchreibtischScreen:
     SofaScreen:
     ControllAll:
-    Faves_TV:
-    Faves_Schreibtisch:
-    Faves_Sofa:
-    Faves_All:
     
     
 <MenuScreen>:
@@ -87,23 +83,6 @@ ScreenManager:
     name: 'controllAll'
     RelativeLayout:
         size: root.width, root.height   
-        MDIconButton:
-            icon: 'arrow-right-bold-box'
-            user_font_size: '45sp'
-            text_color: app.theme_cls.primary_color
-            theme_text_color: 'Custom'
-            pos_hint: {'center_x':0.9, 'center_y':0.94}
-            on_release: 
-                root.manager.transition.direction = 'left'
-                root.manager.current = 'faves_all'
-    
-        MDLabel:
-            text: "Alle LED's"
-            font_style: 'Button'
-            font_size: '36sp'
-            halign: 'center'
-            pos_hint: {'center_y':0.94}
-    
         ColorWheel:
             text: 'Sofa'
             id: colorpicker
@@ -155,7 +134,7 @@ ScreenManager:
             
         MDIconButton:
             icon: 'home'
-            user_font_size: '45sp'
+            user_font_size: '30sp'
             size_hint: None, None
             pos_hint: {'center_x': 0.5, 'center_y': 0.05}
             on_release: 
@@ -174,32 +153,30 @@ ScreenManager:
                 
         MDIcon:
             pos_hint: {'center_x': 1.3, 'center_y': 0.04}
-            icon: 'sofa-single'
+            icon: 'desktop-tower-monitor'
             font_size: '20sp'
             color: (1, 1, 1, 1)
+            
+    AnchorLayout:
+        anchor_y: 'top'
+        MDToolbar:
+            title: "Alle LED's"
+            md_bg_color: 40/255, 40/255, 40/255, 1
+            specific_text_color: 0.4, 1, 0.775, 1
+            elevation: 10
+            right_action_items: [["home-assistant"],["menu", lambda x: nav_drawer.set_state("open"), "Favorites"]]
+        
+        MDNavigationDrawer:
+            id: nav_drawer
+            anchor: 'right'
+            state: 'open'
+            RV_all:
         
 
 <TVScreen>:
     name: 'tv'
     RelativeLayout: 
         size: root.width, root.height              
-        MDIconButton:
-            icon: 'arrow-right-bold-box'
-            user_font_size: '45sp'
-            text_color: app.theme_cls.primary_color
-            theme_text_color: 'Custom'
-            pos_hint: {'center_x':0.9, 'center_y':0.94}
-            on_release: 
-                root.manager.transition.direction = 'left'
-                root.manager.current = 'faves_tv'
-    
-        MDLabel:
-            halign: 'center'
-            pos_hint: {'center_y':0.94}
-            text: 'Fernseher'
-            font_style: 'Button'
-            font_size: '36sp'
-    
         ColorWheel:
             text: 'Fernseher'
             id: colorpicker
@@ -245,7 +222,7 @@ ScreenManager:
         MDIconButton:
             icon: 'home'
             size_hint: None, None
-            user_font_size: '45sp'
+            user_font_size: '30sp'
             pos_hint: {'center_x': 0.5, 'center_y': 0.05}
             on_release: 
                 root.manager.transition.direction = 'down'
@@ -267,28 +244,28 @@ ScreenManager:
             font_size: '20sp'
             color: (1, 1, 1, 1)
             
+    AnchorLayout:
+        anchor_y: 'top'
+        MDToolbar:
+            title: "Fernseher"
+            icon: 'television-ambient-light'
+            md_bg_color: 40/255, 40/255, 40/255, 1
+            specific_text_color: 0.4, 1, 0.775, 1
+            elevation: 10
+            right_action_items: [["television-ambient-light"], ["menu", lambda x: nav_drawer.set_state("open"), "Favorites"]]
+        
+        MDNavigationDrawer:
+            id: nav_drawer
+            anchor: 'right'
+            state: 'open'
+            RV:
+                #: set IP '192.168.178.26'
+            
 
 <SchreibtischScreen>:
     name: 'schreibtisch'
     RelativeLayout:
         size: root.width, root.height
-        MDIconButton:
-            icon: 'arrow-right-bold-box'
-            user_font_size: '45sp'
-            text_color: app.theme_cls.primary_color
-            theme_text_color: 'Custom'
-            pos_hint: {'center_x':0.9, 'center_y':0.94}
-            on_release: 
-                root.manager.transition.direction = 'left'
-                root.manager.current = 'faves_schreibtisch'
-    
-        MDLabel:
-            text: 'Schreibtisch'
-            font_style: 'Button'
-            font_size: '36sp'
-            halign: 'center'
-            pos_hint: {'center_y':0.94}
-    
         ColorWheel:
             text: 'Schreibtisch'
             id: colorpicker
@@ -334,7 +311,7 @@ ScreenManager:
         MDIconButton:
             icon: 'home'
             size_hint: None, None
-            user_font_size: '45sp'
+            user_font_size: '30sp'
             pos_hint: {'center_x': 0.5, 'center_y': 0.05}
             on_release: 
                 root.manager.transition.direction = 'down'
@@ -372,28 +349,28 @@ ScreenManager:
             font_size: '20sp'
             color: (1, 1, 1, 1)
             
+    AnchorLayout:
+        anchor_y: 'top'
+        MDToolbar:
+            title: "Schreibtisch"
+            icon: 'desktop-tower-monitor'
+            md_bg_color: 40/255, 40/255, 40/255, 1
+            specific_text_color: 0.4, 1, 0.775, 1
+            elevation: 10
+            right_action_items: [["desktop-tower-monitor"], ["menu", lambda x: nav_drawer.set_state("open"), "Favorites"]]
+        
+        MDNavigationDrawer:
+            id: nav_drawer
+            anchor: 'right'
+            state: 'open'
+            RV:
+                #: set IP '192.168.178.26'
+            
             
 <SofaScreen>:
-    name: 'sofa'
+    name: 'sofa'            
     RelativeLayout:
-        size: root.width, root.height       
-        MDIconButton:
-            icon: 'arrow-right-bold-box'
-            user_font_size: '45sp'
-            text_color: app.theme_cls.primary_color
-            theme_text_color: 'Custom'
-            pos_hint: {'center_x':0.9, 'center_y':0.94}
-            on_release: 
-                root.manager.transition.direction = 'left'
-                root.manager.current = 'faves_sofa'
-    
-        MDLabel:
-            text: 'Sofa'
-            font_style: 'Button'
-            font_size: '36sp'
-            halign: 'center'
-            pos_hint: {'center_y':0.94}
-    
+        size: root.width, root.height         
         ColorWheel:
             text: 'Sofa'
             id: colorpicker
@@ -438,7 +415,7 @@ ScreenManager:
             
         MDIconButton:
             icon: 'home'
-            user_font_size: '45sp'
+            user_font_size: '30sp'
             size_hint: None, None
             pos_hint: {'center_x': 0.5, 'center_y': 0.05}
             on_release: 
@@ -476,81 +453,24 @@ ScreenManager:
             icon: 'television-ambient-light'
             font_size: '20sp'
             color: (1, 1, 1, 1)
-                
             
-<Faves_TV>:
-    name: 'faves_tv'
-
-    BoxLayout:
-        orientation: 'vertical'
-        MDIconButton:
-            icon: 'arrow-left-bold-box'
-            user_font_size: '45sp'
-            text_color: app.theme_cls.primary_color
-            theme_text_color: 'Custom'
-            pos_hint: {'center_x':0.1, 'center_y':0.5}
-            on_release: 
-                root.manager.transition.direction = 'right'
-                root.manager.current = 'tv'
-                    
-        RV:
-            #: set IP '192.168.178.26'
+    AnchorLayout:
+        anchor_y: 'top'
+        MDToolbar:
+            title: "Sofa"
+            icon: 'sofa-single'
+            md_bg_color: 40/255, 40/255, 40/255, 1
+            specific_text_color: 0.4, 1, 0.775, 1
+            elevation: 10
+            right_action_items: [["sofa-single"], ["menu", lambda x: nav_drawer.set_state("open"), "Favorites"]]
         
-
-<Faves_Schreibtisch>:
-    name: 'faves_schreibtisch'
-            
-    BoxLayout:
-        orientation: 'vertical'
-        MDIconButton:
-            icon: 'arrow-left-bold-box'
-            user_font_size: '45sp'
-            text_color: app.theme_cls.primary_color
-            theme_text_color: 'Custom'
-            pos_hint: {'center_x':0.1, 'center_y':0.5}
-            on_release: 
-                root.manager.transition.direction = 'right'
-                root.manager.current = 'schreibtisch'
-            
-        RV:
-            #: set IP '192.168.178.26'
-        
-            
-<Faves_Sofa>:
-    name: 'faves_sofa'
-    
-    BoxLayout:
-        orientation: 'vertical'
-        MDIconButton:
-            icon: 'arrow-left-bold-box'
-            user_font_size: '45sp'
-            text_color: app.theme_cls.primary_color
-            theme_text_color: 'Custom'
-            pos_hint: {'center_x':0.1, 'center_y':0.5}
-            on_release: 
-                root.manager.transition.direction = 'right'
-                root.manager.current = 'sofa'            
-                    
-        RV:
-            #: set IP '192.168.178.26'
-            
-<Faves_All>:
-    name: 'faves_all'
-    
-    BoxLayout:
-        orientation: 'vertical'
-        MDIconButton:
-            icon: 'arrow-left-bold-box'
-            user_font_size: '45sp'
-            text_color: app.theme_cls.primary_color
-            theme_text_color: 'Custom'
-            pos_hint: {'center_x':0.1, 'center_y':0.5}
-            on_release: 
-                root.manager.transition.direction = 'right'
-                root.manager.current = 'controllAll'            
-                    
-        RV_all:
-            
+        MDNavigationDrawer:
+            id: nav_drawer
+            anchor: 'right'
+            state: 'open'
+            RV:
+                #: set IP '192.168.178.26'                
+                           
             
 <RV>:
     viewclass: 'Button'
