@@ -166,8 +166,7 @@ class LedApp(MDApp, ScreenManager):
     def submit_brigthness(brightness_slider, IP):
         value = int(brightness_slider.value)
         try:
-            pass
-            #requests.post(f"http://{IP}/brightness?value={value}")
+            requests.post(f"http://{IP}/brightness?value={value}")
         except:
             show_popup()
 
@@ -175,8 +174,7 @@ class LedApp(MDApp, ScreenManager):
     def submit_brigthness_all(brightness_slider):
         value = int(brightness_slider.value)
         try:
-            pass
-            #requests.post(f"http://192.168.178.26/brightness?value={value}")
+            requests.post(f"http://192.168.178.26/brightness?value={value}")
             #hier neue esps ergänzen
         except:
             show_popup()
@@ -204,7 +202,6 @@ class LedApp(MDApp, ScreenManager):
     @staticmethod
     def all_off():
         try:
-            print("Alle aus")
             requests.post("http://192.168.178.26/change?color_R=0&color_G=0&color_B=0")
             #hier neue esps einfügen
         except:
