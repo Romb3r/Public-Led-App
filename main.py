@@ -1,6 +1,7 @@
 import requests, os
 from kivymd.app import MDApp
 from kivy.lang.builder import Builder
+from kivy.uix.label import Label
 from kivy.config import Config
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.uix.floatlayout import FloatLayout
@@ -47,19 +48,7 @@ class MenuScreen(Screen):
     pass
 
 
-class ControllAll(Screen, Funcs):
-    pass
-
-
 class TVScreen(Screen, Funcs):
-    pass
-
-
-class SchreibtischScreen(Screen, Funcs):
-    pass
-
-
-class SofaScreen(Screen, Funcs):
     pass
 
 
@@ -84,35 +73,8 @@ class RV(RecycleView):
         r = int(float(x[0]) * 255)
         g = int(float(x[1]) * 255)
         b = int(float(x[2]) * 255)
-
-        try:
-            requests.post(f"http://{IP}/change?color_R={r}&color_G={g}&color_B={b}")
-        except:
-            show_popup()
-
-
-class RV_all(RecycleView):
-    @staticmethod
-    def get_faves():
-        f = open("color_faves.txt", "r")
-        faves = f.read()
-        faves_list = faves.split("\n")
-        f.close()
-        return faves_list
-
-    @staticmethod
-    def send_fave_request_all(x):
-        x = x.split(", ")
-
-        r = int(float(x[0]) * 255)
-        g = int(float(x[1]) * 255)
-        b = int(float(x[2]) * 255)
-
-        try:
-            requests.post(f"http://192.168.178.26/change?color_R={r}&color_G={g}&color_B={b}")
-            # Hier neue ESP's ergänzen
-        except:
-            show_popup()
+        send_post_request(f"http://{IP}/change?color_R={r}&color_G={g}&color_B={b}")
+        LedApp.get_running_app().root.get_screen('tv').ids["color_label"].color = [r / 255, g / 255, b / 255, 1]
 
 
 class ContentNavigationDrawer(RV):
@@ -137,48 +99,12 @@ class LedApp(MDApp, ScreenManager):
         r = int(r * 255)
         g = int(g * 255)
         b = int(b * 255)
-
-        try:
-            requests.post(f"http://{IP}/change?color_R={r}&color_G={g}&color_B={b}")
-        except:
-            show_popup()
-
-
-    @staticmethod
-    def submit_color_all(colorpicker):
-        color = colorpicker.color
-        r = color[0]
-        g = color[1]
-        b = color[2]
-
-        r = int(r * 255)
-        g = int(g * 255)
-        b = int(b * 255)
-
-        try:
-            requests.post(f"http://192.168.178.26/change?color_R={r}&color_G={g}&color_B={b}")
-            # hier neue esp's ergänzen
-        except:
-            show_popup()
-
+        send_post_request(f"http://{IP}/change?color_R={r}&color_G={g}&color_B={b}")
 
     @staticmethod
     def submit_brigthness(brightness_slider, IP):
         value = int(brightness_slider.value)
-        try:
-            requests.post(f"http://{IP}/brightness?value={value}")
-        except:
-            show_popup()
-
-    @staticmethod
-    def submit_brigthness_all(brightness_slider):
-        value = int(brightness_slider.value)
-        try:
-            requests.post(f"http://192.168.178.26/brightness?value={value}")
-            #hier neue esps ergänzen
-        except:
-            show_popup()
-
+        send_post_request(f"http://{IP}/brightness?value={value}")
 
     @staticmethod
     def set_faves(color_label):
@@ -190,22 +116,15 @@ class LedApp(MDApp, ScreenManager):
         f.seek(0)
         lines = f.read().splitlines()
         if color in lines:
+            show_popup("Farbe schon in Favoriten!")
             return
-        else:
-            if os.stat("color_faves.txt").st_size != 0:
-                f.write("\n" + color)
-                f.close()
-            else:
-                f.write(color)
-                f.close()
 
-    @staticmethod
-    def all_off():
-        try:
-            requests.post("http://192.168.178.26/change?color_R=0&color_G=0&color_B=0")
-            #hier neue esps einfügen
-        except:
-            show_popup()
+        if os.stat("color_faves.txt").st_size != 0:
+            f.write("\n" + color)
+            f.close()
+        else:
+            f.write(color)
+            f.close()
 
 
 def hex_to_rgb(hex):
@@ -217,19 +136,21 @@ def hex_to_rgb(hex):
     return tuple(rgb)
 
 
-def show_popup():
-    show = P()
-    popup_window = Popup(title="Error", content=show, size_hint=(None, None), size=(500, 300))
+def show_popup(text):
+    popup_window = Popup(title="Error", content=Label(text=text), size_hint=(None, None), size=(500, 300))
     popup_window.open()
 
+def send_post_request(route):
+    pass
+    try:
+        requests.post(route)
+        # hier neue esps ergänzen
+    except:
+        show_popup("LED's nicht erreichbar!")
 
 sm = ScreenManager()
 sm.add_widget(MenuScreen(name='menu'))
 sm.add_widget(TVScreen(name='tv'))
-sm.add_widget(SchreibtischScreen(name='schreibtisch'))
-sm.add_widget(SofaScreen(name='sofa'))
-sm.add_widget(ControllAll(name='controllAll'))
-
 
 
 LedApp().run()
